@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do App</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#0f172a;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+h1{
+    text-align:center;
+}
+
+.input-section{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+input{
+    flex:1;
+    padding:10px;
+}
+
+button{
+    padding:10px 15px;
+    border:none;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+.add-btn{
+    background:green;
+    color:white;
+}
+
+.complete-btn{
+    background:blue;
+    color:white;
+}
+
+.delete-btn{
+    background:red;
+    color:white;
+}
+
+.task{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px;
+    margin:10px 0;
+    background:#f2f2f2;
+    border-radius:5px;
+}
+
+.task-info{
+    flex:1;
+}
+
+.time{
+    font-size:12px;
+    color:gray;
+}
+
+.section{
+    margin-top:30px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>To-Do Web App</h1>
+
+<div class="input-section">
+    <input type="text" id="taskInput" placeholder="Enter Task">
+    <button class="add-btn" onclick="addTask()">Add Task</button>
+</div>
+
+<div class="section">
+    <h2>Pending Tasks</h2>
+    <div id="pendingTasks"></div>
+</div>
+
+<div class="section">
+    <h2>Completed Tasks</h2>
+    <div id="completedTasks"></div>
+</div>
+
+</div>
+
+<script>
+
+function addTask(){
+
+    let input = document.getElementById("taskInput");
+    let taskText = input.value.trim();
+
+    if(taskText === ""){
+        alert("Please enter a task");
+        return;
+    }
+
+    let currentTime = new Date().toLocaleString();
+
+    let task = document.createElement("div");
+    task.className = "task";
+
+    task.innerHTML = `
+        <div class="task-info">
+            <strong>${taskText}</strong>
+            <div class="time">Added: ${currentTime}</div>
+        </div>
+
+        <div>
+            <button class="complete-btn"
+            onclick="completeTask(this)">
+            Complete
+            </button>
+
+            <button class="delete-btn"
+            onclick="deleteTask(this)">
+            Delete
+            </button>
+        </div>
+    `;
+
+    document.getElementById("pendingTasks").appendChild(task);
+
+    input.value = "";
+}
+
+function completeTask(button){
+
+    let task = button.parentElement.parentElement;
+
+    button.remove();
+
+    document.getElementById("completedTasks")
+            .appendChild(task);
+}
+
+function deleteTask(button){
+
+    button.parentElement.parentElement.remove();
+}
+
+</script>
+
+</body>
+</html>
